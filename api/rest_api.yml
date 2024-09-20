@@ -1,0 +1,42 @@
+openapi: 3.0.0
+info:
+  title: VK API Sample
+  description: Social Network API Design Training Project
+  version: 1.0.0
+
+paths:
+  /users/add-friend/{userId}:
+    get:
+      summary: Add new friend.
+      description: Add a new user to your friends list.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the new friend
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        "200":
+          description: OK
+          
+  /users/remove-friend/{userId}:
+    get:
+      summary: Remove friend.
+      description: Remove user from friends list.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of user who will be removed from friends
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        "200":
+          description: The user was removed from friends.
+          
+        
