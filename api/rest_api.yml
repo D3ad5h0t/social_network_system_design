@@ -5,11 +5,19 @@ info:
   version: 1.0.0
 
 paths:
-  /users/add-friend/{userId}:
+  /users/{myId}/add-friend/{userId}:
     get:
       summary: Add new friend.
       description: Add a new user to your friends list.
       parameters:
+        - name: myId
+          in: path
+          required: true
+          description: ID of the user who wants to be friends
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
         - name: userId
           in: path
           required: true
@@ -38,5 +46,92 @@ paths:
       responses:
         "200":
           description: The user was removed from friends.
+  /users/{userId}/friends:
+    get:
+      summary: Get all users friends.
+      description: Get all friends by user id.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID whose friends list needs to be returned.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        "200":
+          description: Returns a list of all friends of the user
+          content:
+            application/json:
+              schema:
+                description: List of friends
+                required:
+                  - userId
+                properties:
+                  friends:
+                    description: Array of users
+                    type: array
+                    example: []
+  /users/{userName}:
+    get:
+      summary: Get user's form
+      description: Returs open data of selected user
+      parameters:
+        - name: userName
+          in: path
+          required: true
+          description: Unique username on the social network.
+          schema:
+            type: string
+            format: string
+      responses:
+        "200":
+          description: Returns successfully found user data
+          content:
+            application/json:
+              schema:
+                required:
+                  - username
+                properties:
+                  username:
+                    type: string
+                    example: oda_nobunaga
+                  firstName:
+                    type: string
+                    example: Sasori
+                  secondName:
+                    type: string
+                    example: Kano
+                  birth:
+                    type: string
+                    example: 15.09.2024
+                  city:
+                    type: string
+                    example: Tokyo
+                  school:
+                    type: string
+                    example: Tokyo International School
           
-        
+  /feed/new-post:
+    post:
+      description: Submitting data to create a new post.
+      parameters:
+        - name: title
+          in: query
+          required: true
+          description: Title of new post
+          schema:
+            type: string
+            example: New Title
+        - name: text
+          in: query
+          required: true
+          description: Main body of new post
+          schema:
+            type: string
+            example: Hello World!
+      responses:
+        "201":
+          description: New post published
+            
